@@ -168,13 +168,14 @@ function App() {
   };
 
   useEffect(() => {
-    if (currentView === 'products' && token) {
-      fetchProducts();
+    if (error || success) {
+      const timer = setTimeout(() => {
+        setError('');
+        setSuccess('');
+      }, 5000);
+      return () => clearTimeout(timer);
     }
-    if (currentView === 'orders' && token) {
-      fetchOrders();
-    }
-  }, [currentView, token]);
+  }, [error, success]);
 
   if (!token) {
     return <AuthScreen onAuth={handleAuth} loading={loading} error={error} />;
