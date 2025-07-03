@@ -121,9 +121,11 @@ function App() {
       const form = new FormData();
       Object.keys(formData).forEach(key => {
         if (key === 'images') {
-          formData[key].forEach(file => {
-            form.append('images', file);
-          });
+          if (formData[key] && formData[key].length > 0) {
+            formData[key].forEach(file => {
+              form.append('images', file);
+            });
+          }
         } else {
           form.append(key, formData[key]);
         }
@@ -132,11 +134,16 @@ function App() {
       const url = isEdit ? `/api/products/${productId}` : '/api/products';
       const method = isEdit ? 'PUT' : 'POST';
 
-      await apiCall(url, {
+      const response = await fetch(`${API_BASE_URL}${url}`, {
         method,
         body: form,
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to save product');
+      }
 
       setSuccess(isEdit ? 'Product updated successfully!' : 'Product created successfully!');
       fetchProducts();
