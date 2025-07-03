@@ -177,6 +177,15 @@ function App() {
     }
   }, [error, success]);
 
+  useEffect(() => {
+    if (currentView === 'products' && token) {
+      fetchProducts();
+    }
+    if (currentView === 'orders' && token) {
+      fetchOrders();
+    }
+  }, [currentView, token]);
+
   if (!token) {
     return <AuthScreen onAuth={handleAuth} loading={loading} error={error} />;
   }
