@@ -226,6 +226,7 @@ function App() {
             products={products} 
             onDelete={handleDeleteProduct}
             onEdit={(product) => setCurrentView(`edit-product-${product.id}`)}
+            setCurrentView={setCurrentView}
           />
         )}
         
