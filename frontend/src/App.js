@@ -568,7 +568,7 @@ const Dashboard = ({ products, orders, onGenerateSampleOrders, loading }) => {
 };
 
 // Products View Component
-const ProductsView = ({ products, onDelete, onEdit }) => {
+const ProductsView = ({ products, onDelete, onEdit, setCurrentView }) => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
